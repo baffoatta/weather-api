@@ -4,18 +4,23 @@ from flask_cors import CORS
 import requests
 import os
 import traceback
-
+import logging
 
 load_dotenv()
-
 app = Flask(__name__)
 CORS(app)
 
-api_key = os.environ.get("WEATHER_API_KEY", "3332dad34986")
+# Configuration
+def get_env_variable(key, default=None):
+    return os.environ.get(key, default)
 
+api_key = get_env_variable("WEATHER_API_KEY", "3332dad34986")
 base_url = "http://api.openweathermap.org/data/2.5/weather"
 
+logging.basicConfig(level=logging.DEBUG)
+
 def get_weather_data(city):
+    """Retrieve weather data for the specified city."""
     params = {
         'q': city,
         'appid': api_key,
@@ -30,11 +35,16 @@ def get_weather_data(city):
     except KeyError as e:
         return jsonify({"error": f"An error occured: {str(e)}"}), 400
     
+    
+    
+    
 @app.route('/weather', methods=['GET'])
 def weather():
+    """Endpoint to get weather information based on the provided city parameter."""
     city = request.args.get('city')
 
     if not city:
+        app.logger.error('City parameter is required')
         return jsonify({'error': 'City parameter is required'}), 400
 
     weather_data = get_weather_data(city)
