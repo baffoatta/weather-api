@@ -1,9 +1,12 @@
-import traceback
 from flask import Flask, request, jsonify
+from dotenv import load_dotenv
+from flask_cors import CORS
 import requests
 import os
-from flask_cors import CORS
+import traceback
 
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
@@ -21,7 +24,6 @@ def get_weather_data(city):
     try:
         response = requests.get(base_url, params=params)
         data = response.json()
-        print(data)
         return data
     except requests.RequestException as e:
         return jsonify({"error": f"Network error: {str(e)}"}), 500
