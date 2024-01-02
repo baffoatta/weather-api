@@ -1,0 +1,35 @@
+# Ignore compiled files
+*.class
+*.jar
+*.war
+
+# Ignore dependencies
+/lib/
+/node_modules/
+
+# Ignore build output
+/build/
+/dist/
+/out/
+
+# Ignore IDE files
+.idea/
+.vscode/
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore environment-specific files
+.env
+.env.local
+
+# Ignore logs and generated files
+/logs/
+*.log
+
+# Ignore temporary files
+.tmp/
+
+# Ignore configuration files
+*.config
